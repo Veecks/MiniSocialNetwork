@@ -1,0 +1,26 @@
+# .gitignore
+
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+.env
+
+gunicorn.log
+
+*.egg-info
+dist/
+build/
+*.egg
+*.tar.gz
+
+venv/
+env/
+.venv/
+
+*.swp
+*.swx
+*.DS_Store
