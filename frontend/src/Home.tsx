@@ -9,7 +9,7 @@ export default function Home() {
     const isAuth = async () => {
         const user = auth.currentUser
         const token = user ? await user.getIdToken(true) : null
-        const data : Response = await fetch('http://127.0.0.1:5000/isauth', {
+        const data : Response = await fetch('http://api.minisnw.up.railway.app/isauth', {
             method: 'POST',
             body: JSON.stringify({
                 id_token: token
