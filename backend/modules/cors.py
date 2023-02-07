@@ -1,6 +1,6 @@
 from flask import request
 
-allowed = ['http://localhost:5173', 'http://minisnw.up.railway.app']
+allowed = ['http://localhost:5173', 'https://minisnw.up.railway.app']
 
 
 
