@@ -25,6 +25,7 @@ const auth = getAuth();
 function App() {
   const [user, setUser] = useState(auth.currentUser)
   auth.onAuthStateChanged((usr) => setUser(usr))
+
   return (
     <div className="App">
       <h2>MiniBLOG</h2>
