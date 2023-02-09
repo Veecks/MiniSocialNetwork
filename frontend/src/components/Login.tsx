@@ -17,18 +17,22 @@ export default function Login() {
         setUserData({ ...userData, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault()
-        signInWithEmailAndPassword(auth, userData.email, userData.password)
+        let user = null
+        await signInWithEmailAndPassword(auth, userData.email, userData.password)
         .then((userCredential) => {
-            const user = userCredential.user;
+             user = userCredential.user;
           })
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(error)
           });
-        e.target.value = ''
+        if(user) {
+            e.target.value = ''
+            window.location.reload()
+        }
     }
 
     const inputStyle = 'bg-pri-300 text-pri-600 placeholder-pri-600 font-bold my-1 h-10 text-center rounded-3xl focus:scale-110 transition-all'

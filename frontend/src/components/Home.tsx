@@ -1,5 +1,6 @@
 import { getAuth } from 'firebase/auth';
 import { useState } from 'react';
+import NewPost from './NewPost';
 import Post from './Post';
 
 
@@ -15,7 +16,7 @@ export default function Home() {
             body: JSON.stringify({
                 id_token: token
             }),
-            headers: {'Content-type': 'application/json; charser=UTF-8'},
+            headers: {'Content-type': 'application/json; charset=UTF-8'},
         });
         setMessage(await data.text())
     }
@@ -23,6 +24,7 @@ export default function Home() {
     return (
         <div className="overflow-scroll">
             <div className="">
+                <NewPost/>
                 <Post/>
                 <Post/>
                 <Post/>

@@ -31,7 +31,6 @@ function App() {
     <div className="App m-auto h-full max-h-full fixed w-full bg-pri-50 text-black text-center overflow-y-auto">
       <Header/>
       <Router>
-        {user && <Link to='/' onClick={() => signOut(auth)}>Sair</Link>}
           <Routes>
             <Route path='/' element={<Home/>}/>
           </Routes>
