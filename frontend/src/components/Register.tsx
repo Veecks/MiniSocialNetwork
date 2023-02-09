@@ -36,16 +36,15 @@ export default function Register() {
         const user = await createUserWithEmailAndPassword(auth, userData.email, userData.password)
     }
 
-    const inputStyle = 'bg-pri-300 text-pri-600 placeholder-pri-600 font-bold m-1 h-10 text-center rounded-3xl focus:scale-110 transition-all'
+    const inputStyle = 'bg-pri-300 text-pri-600 placeholder-pri-600 font-bold my-1 h-10 text-center rounded-3xl focus:scale-110 transition-all'
     return(
         <VCenteredCnt>
             <div>
-                <h2 className="font-bold text-2xl text-pri-200 mb-3">Criar uma conta</h2>
-                <form onSubmit={handleSubmit} autoComplete="false" className="flex flex-col w-10/12 max-w-md mb-28" aria-readonly>
+                <form onSubmit={handleSubmit} autoComplete="false" className="flex flex-col w-[96%] max-w-md" aria-readonly>
                     <input autoComplete="off" className={inputStyle} type="email" onChange={handleChange} name="email" placeholder='example@mail.com'/>
                     <input autoComplete="off" className={inputStyle} type="password" onChange={handleChange} name="password" placeholder='******'/>
                     <input autoComplete="off" className={inputStyle} type="password" onChange={handleChange} name="checkpass" placeholder='confirme sua senha'/>
-                    <input className="bg-pri-800 text-pri-400 font-extrabold h-10 text-center rounded-3xl w-56 m-auto" type="submit" value="Criar conta"/>
+                    <input className="bg-pri-500 text-pri-200 font-extrabold h-10 text-center rounded-3xl m-auto" type="submit" value="Criar conta"/>
                 </form> 
             </div>
         </VCenteredCnt>

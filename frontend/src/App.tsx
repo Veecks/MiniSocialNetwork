@@ -34,8 +34,6 @@ function App() {
         {user && <Link to='/' onClick={() => signOut(auth)}>Sair</Link>}
           <Routes>
             <Route path='/' element={<Home/>}/>
-            <Route path='/login' element={<Login/>}/>
-            <Route path='/register' element={<Register/>}/>
           </Routes>
         <Navbar/>
       </Router>

@@ -31,14 +31,14 @@ export default function Login() {
         e.target.value = ''
     }
 
-    const inputStyle = 'bg-pri-600 m-1 h-10 text-center rounded-3xl'
+    const inputStyle = 'bg-pri-300 text-pri-600 placeholder-pri-600 font-bold my-1 h-10 text-center rounded-3xl focus:scale-110 transition-all'
     return(
         <VCenteredCnt>
         <HCenteredCnt>
-            <form onSubmit={handleSubmit} className="flex flex-col w-10/12 ">
-                    <input className={inputStyle} type="email" name="email" onChange={handleInputChange} placeholder='example@mail.com' />
-                    <input className={inputStyle} type="password" name="password" onChange={handleInputChange} placeholder='********'/>
-                <input className="bg-pri-400 text-pri-900 font-extrabold h-10 text-center rounded-3xl w-56 m-auto" type="submit" value="Logar" />
+            <form onSubmit={handleSubmit} className="flex flex-col w-[96%] ">
+                <input className={inputStyle} type="email" name="email" onChange={handleInputChange} placeholder='example@mail.com' />
+                <input className={inputStyle} type="password" name="password" onChange={handleInputChange} placeholder='********'/>
+                <input className="bg-pri-500 text-pri-200 font-extrabold h-10 text-center rounded-3xl m-auto" type="submit" value="Logar" />
             </form>
         </HCenteredCnt>
         </VCenteredCnt>
