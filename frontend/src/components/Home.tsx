@@ -1,5 +1,6 @@
 import { getAuth } from 'firebase/auth';
 import { useState } from 'react';
+import Post from './Post';
 
 
 export default function Home() {
@@ -20,8 +21,14 @@ export default function Home() {
     }
 
     return (
-        <>
-            <input type='button' onClick={isAuth} value={message}/>
-        </>
+        <div className="overflow-scroll">
+            <div className="">
+                <Post/>
+                <Post/>
+                <Post/>
+                <Post/>
+                <Post/>
+            </div>
+        </div>
     )
 }

@@ -1,5 +1,7 @@
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
+import HCenteredCnt from "./containers/HCenteredCnt";
+import VCenteredCnt from "./containers/VCenteredCnt";
 
 export default function Login() {
     const auth = getAuth()
@@ -29,15 +31,16 @@ export default function Login() {
         e.target.value = ''
     }
 
+    const inputStyle = 'bg-pri-600 m-1 h-10 text-center rounded-3xl'
     return(
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="">
-                <input type="email" name="email" onChange={handleInputChange} placeholder='example@mail.com' />
-            </label>
-            <label htmlFor="">
-                <input type="password" name="password" onChange={handleInputChange} placeholder='********'/>
-            </label>
-            <input type="submit" value="Logar" />
-        </form>
+        <VCenteredCnt>
+        <HCenteredCnt>
+            <form onSubmit={handleSubmit} className="flex flex-col w-10/12 ">
+                    <input className={inputStyle} type="email" name="email" onChange={handleInputChange} placeholder='example@mail.com' />
+                    <input className={inputStyle} type="password" name="password" onChange={handleInputChange} placeholder='********'/>
+                <input className="bg-pri-400 text-pri-900 font-extrabold h-10 text-center rounded-3xl w-56 m-auto" type="submit" value="Logar" />
+            </form>
+        </HCenteredCnt>
+        </VCenteredCnt>
     )
 }

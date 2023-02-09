@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import Home from './Home';
-import Login from './Login';
-import Register from './Register';
+import Home from './components/Home';
+import Login from './components/Login';
+import Register from './components/Register';
+import Header from './components/Header';
+import Navbar from './components/Navbar';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signOut } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
@@ -27,27 +28,17 @@ function App() {
   auth.onAuthStateChanged((usr) => setUser(usr))
 
   return (
-    <div className="App">
-      <h2>MiniBLOG</h2>
-      <p>{user ? user.email || '' : 'Esse é um projeto de estudo!'}</p>
+    <div className="App m-auto h-full max-h-full fixed w-full bg-pri-50 text-black text-center overflow-y-auto">
+      <Header/>
       <Router>
-        <Link to='/'>Home</Link>
-        { !user &&
-          <>
-          <Link to='/login'>Login</Link>
-          <Link to='/register'>Registrar-se</Link>
-          </>
-        }
         {user && <Link to='/' onClick={() => signOut(auth)}>Sair</Link>}
-        <Routes>
-          <Route path='/' element={<Home/>}/>
-          <Route path='/login' element={<Login/>}/>
-          <Route path='/register' element={<Register/>}/>
-        </Routes>
-
-        
+          <Routes>
+            <Route path='/' element={<Home/>}/>
+            <Route path='/login' element={<Login/>}/>
+            <Route path='/register' element={<Register/>}/>
+          </Routes>
+        <Navbar/>
       </Router>
-
     </div>
   )
 }

@@ -6,6 +6,7 @@
   "scripts": {
     "start": "npx http-server ./dist",
     "dev": "vite",
+    "hostdev": "vite --host",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
@@ -19,6 +20,9 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.1.0",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.2.4",
     "typescript": "^4.9.3",
     "vite": "^4.1.0"
   }
