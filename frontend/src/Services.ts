@@ -1,7 +1,7 @@
 import { FirebaseApp, initializeApp } from "firebase/app";
 import { Auth, createUserWithEmailAndPassword, getAuth, NextOrObserver, signInWithEmailAndPassword, User } from "firebase/auth";
 
-class UserData {
+export class UserData {
     name: string
     username: string
     email: string

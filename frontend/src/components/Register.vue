@@ -1,20 +1,17 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
-import services from '../Services';
+import { reactive } from 'vue';
+import services, { UserData } from '../Services';
 import Input from './Input.vue';
 
-const userData = reactive({
-    email: ref(''),
-    password: ref(''),
-    confirmPassword: ref(''),
-})
+const userData = reactive(new UserData('', '', ''))
+const pass = reactive({password: '', confirm: ''})
 
 async function submit() {
-    if(userData.password != userData.confirmPassword) {
+    if(pass.password != pass.confirm) {
         alert('As senhas devem ser idênticas!')
         return
     }
-    await services.createAccount(userData.email, userData.password)
+    await services.createAccount(userData, pass.password)
 }
 
 </script>
@@ -23,8 +20,8 @@ async function submit() {
     <div>
         <div class="w-full h-full">
             <Input class="mb-4" type="email" v-model="userData.email" placeholder="email"/>
-            <Input class="mb-4" type="password" v-model="userData.password" placeholder="senha"/>
-            <Input class="mb-4" type="password" v-model="userData.confirmPassword" placeholder="confirme sua senha"/>
+            <Input class="mb-4" type="password" v-model="pass.password" placeholder="senha"/>
+            <Input class="mb-4" type="password" v-model="pass.confirm" placeholder="confirme sua senha"/>
             <button class="block m-auto text text-pri-100 bg-pri-400 py-3 px-6 rounded-full font-bold" @click="submit">
                 Criar conta
             </button>
