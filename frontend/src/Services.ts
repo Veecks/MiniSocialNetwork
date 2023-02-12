@@ -1,11 +1,16 @@
 import { FirebaseApp, initializeApp } from "firebase/app";
 import { Auth, createUserWithEmailAndPassword, getAuth, NextOrObserver, signInWithEmailAndPassword, User } from "firebase/auth";
 
-interface UserData {
-    name: string,
-    username: string,
-    email: string,
-    password?: string,
+class UserData {
+    name: string
+    username: string
+    email: string
+
+    constructor(name: string, username: string, email: string) {
+        this.name = name
+        this.username = name
+        this.email = email
+    }
 }
 
 class Services {
@@ -40,7 +45,7 @@ class Services {
     }
 
     async loginWithEmailAndPassword(email: string, password: string) {
-        const userCred = await signInWithEmailAndPassword(this.auth, email, password)
+        await signInWithEmailAndPassword(this.auth, email, password)
             .catch(error => {
                 console.log('Ocorreu um erro durante a autentificação do usuário:')
                 console.log(error)
@@ -48,16 +53,14 @@ class Services {
         return this.getCurrentUser()
     }
 
-    async createAccount(email: string, password: string) {
-        await createUserWithEmailAndPassword(this.auth, email, password)
+    async createAccount(userData: UserData, password: string) {
+        await createUserWithEmailAndPassword(this.auth, userData.email, password || '')
         .catch(error => console.log('Falha ao criar usuário: ' + error.message))
     }
 
-    getCurrentUser() {
+    getCurrentUser() : UserData | null {
         const user = this.auth.currentUser
-        return !user ? null : {
-            email: user.email,
-        }
+        return user ? new UserData('', '', user.email!) : null
     }
 
     onAuthStateChange(func: NextOrObserver<User | null>) {
