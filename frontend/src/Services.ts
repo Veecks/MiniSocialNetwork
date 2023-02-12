@@ -1,6 +1,13 @@
 import { FirebaseApp, initializeApp } from "firebase/app";
 import { Auth, createUserWithEmailAndPassword, getAuth, NextOrObserver, signInWithEmailAndPassword, User } from "firebase/auth";
 
+interface UserData {
+    name: string,
+    username: string,
+    email: string,
+    password?: string,
+}
+
 class Services {
     app: FirebaseApp
     auth: Auth
