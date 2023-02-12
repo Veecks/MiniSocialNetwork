@@ -11,4 +11,5 @@ def allow_cors(route):
         res.headers['Access-Control-Allow-Origin'] = origin
         res.headers['Access-Control-Allow-Headers'] = '*'
         return res
+    wrapper.__name__ = route.__name__
     return wrapper

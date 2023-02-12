@@ -23,6 +23,19 @@ def is_auth():
         return res
     return Response()
 
+@app.route('/new_user', methods=['POST', 'OPTIONS'])
+@allow_cors
+def new_user():
+    res = Response()
+    if request.method == 'POST':
+        data = request.get_json()
+        try:
+            decoded = auth.verify_id_token(data['id_token'])
+        except Exception as e:
+            return res.set_data({'error': e.message})
+        print(decoded)
+    return res
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=os.getenv('PORT', default=5000))

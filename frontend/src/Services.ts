@@ -45,11 +45,7 @@ class Services {
     }
 
     async loginWithEmailAndPassword(email: string, password: string) {
-        await signInWithEmailAndPassword(this.auth, email, password)
-            .catch(error => {
-                console.log('Ocorreu um erro durante a autentificação do usuário:')
-                console.log(error)
-            })
+        // this.postToAPI('new-user', userData)
         return this.getCurrentUser()
     }
 
