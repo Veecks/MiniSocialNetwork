@@ -1,10 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import HCenteredCnt from "./containers/HCenteredCnt";
 import VCenteredCnt from "./containers/VCenteredCnt";
 
 export default function Register() {
-    const auth = getAuth()
 
     interface i_userData {
         // nickname: string;
@@ -33,7 +30,7 @@ export default function Register() {
             alert('As senhas devem ser idênticas!')
             return
         }
-        const user = await createUserWithEmailAndPassword(auth, userData.email, userData.password)
+        
     }
 
     const inputStyle = 'bg-pri-300 text-pri-600 placeholder-pri-600 font-bold my-1 h-10 text-center rounded-3xl focus:scale-110 transition-all'

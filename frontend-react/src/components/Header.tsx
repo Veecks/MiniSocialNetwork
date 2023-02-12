@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import LoginPopup from "./LoginPopup";
-import { getAuth, signOut } from "firebase/auth";
+import services from "../Services";
+import { userContext } from "../contexts/UserProvider";
 
 export default function Header() {
     const [ hidePopup, setHidePopup ] = useState(true)
-    const auth = getAuth()
+    const [ user, setUser ] = useContext(userContext)
+    
+
     return (
         <>
             <div className="h-14"></div>
@@ -13,8 +16,8 @@ export default function Header() {
                 <h1 className="font-bold text-5xl">MINI</h1>
                 <div>
                     {
-                        auth.currentUser ?
-                        <p className="text-right m-auto pr-3" onClick={() => signOut(auth)}>Sair</p>
+                        user ?
+                        <p className="text-right m-auto pr-3" onClick={() => services.signOut()}>Sair</p>
                         : <p className="text-right m-auto pr-3" onClick={() => setHidePopup(false)}>Entrar</p>
                     }
                 </div>

@@ -2,11 +2,14 @@
 module.exports = {
   content: [
     './index.html',
-    './src/**/*.{vue,js,ts,jsx,tsx}',
+    './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
       colors: {
+        'palette': {
+          'background': '#f4edfe',
+        },
         'pri': {
           '50': '#f6f6f9',
           '100': '#ececf2',

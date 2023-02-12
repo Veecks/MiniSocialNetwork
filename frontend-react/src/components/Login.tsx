@@ -1,11 +1,9 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import HCenteredCnt from "./containers/HCenteredCnt";
 import VCenteredCnt from "./containers/VCenteredCnt";
+import services from "../Services";
 
 export default function Login() {
-    const auth = getAuth()
-
     interface i_userData {
         email: string;
         password: string;
@@ -19,19 +17,10 @@ export default function Login() {
 
     const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault()
-        let user = null
-        await signInWithEmailAndPassword(auth, userData.email, userData.password)
-        .then((userCredential) => {
-             user = userCredential.user;
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(error)
-          });
+        const user = await services.loginWithEmailAndPassword(userData.email, userData.password)
         if(user) {
+            console.log('logado usuário com email:' + user.email)
             e.target.value = ''
-            window.location.reload()
         }
     }
 
