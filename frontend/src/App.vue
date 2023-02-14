@@ -17,7 +17,7 @@ onBeforeMount(async () => {
     <LoginPopup/>
     <div class="h-full w-full flex flex-col items-center">
       <Header/>
-      <div class="h-full w-full flex-grow overflow-auto">
+      <div class="h-full w-full flex-grow overflow-auto text-md">
         <RouterView></RouterView>
       </div>
       <NavBar/>
