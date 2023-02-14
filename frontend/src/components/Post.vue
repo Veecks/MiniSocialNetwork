@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    defineProps(['postData'])
 </script>
 
 <template>
@@ -6,13 +7,13 @@
         <div class="flex flex-row justify-start items-center drop-shadow-none my-3">
             <span class="w-14 h-14 rounded-full bg-pri-200 overflow-hidden"></span>
             <div class="ml-3">
-                <p>DisplayName</p>
-                <p class="font-thin text-sm">@UserName</p>
+                <p>{{ postData.owner_name }}</p>
+                <p class="font-thin text-sm">@{{ postData.owner_username }}</p>
             </div>
         </div>
         <div>
             <p>
-                Lorem Ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
+                {{ postData.content }}
             </p>
         </div>
     </div>

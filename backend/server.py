@@ -65,9 +65,11 @@ def new_post():
 
 
 @app.route('/get-posts', methods=['GET', 'OPTIONS'])
+@allow_cors
 def get_posts():
     res = Response()
     if request.method == 'GET':
+        print('Requisição get')
         try:
             posts = json.dumps({'posts': fire.get_posts()}, default=str)
             res.set_data(posts)

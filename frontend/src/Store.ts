@@ -9,3 +9,4 @@ services.onAuthStateChange(() => {
 })
 
 export const isLoginPopup = ref(false)
+export const homePagePosts = ref({} as {posts: {}})

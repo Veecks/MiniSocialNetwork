@@ -74,7 +74,7 @@ def new_post(uid, content):
 
 def get_posts():
   try:
-    query_ref = db.collection('posts').order_by('created_at').stream()
+    query_ref = db.collection('posts').order_by('created_at', direction='DESCENDING').stream()
     posts = [post.to_dict() for post in query_ref]
       
     return posts

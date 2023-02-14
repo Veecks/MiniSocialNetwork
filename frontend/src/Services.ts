@@ -1,5 +1,5 @@
 import { FirebaseApp, initializeApp } from "firebase/app";
-import { Auth, createUserWithEmailAndPassword, getAuth, NextOrObserver, signInWithEmailAndPassword, User } from "firebase/auth";
+import { Auth, getAuth, NextOrObserver, signInWithEmailAndPassword, User } from "firebase/auth";
 
 export class UserData {
     name: string
@@ -43,6 +43,13 @@ class Services {
             },
         })
     }
+    
+    async getFromAPI(path: string, idToken='') {
+        const res = await fetch(this.apiURL + path, {
+            method: 'GET',
+        })
+        return res
+    }
 
     async loginWithEmailAndPassword(email: string, password: string) {
         signInWithEmailAndPassword(this.auth, email, password)
@@ -70,6 +77,11 @@ class Services {
 
     async signOut() {
         await this.auth.signOut()
+    }
+
+    async getPosts() {
+        const data = await this.getFromAPI('/get-posts')
+        return await data.json()
     }
 }
 
