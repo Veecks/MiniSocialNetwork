@@ -57,6 +57,8 @@ def my_profile(uid):
 def new_post(uid, content):
   owner_ref = db.collection('users').document(uid)
   owner_data = owner_ref.get().to_dict()
+  if(type(content) is not str and content != ''):
+    raise ValueError('A publicação não pode ser vazia!')
   post = {
     'content': content,
     'owner_name': owner_data['name'],

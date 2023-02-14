@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import services from "./Services";
+import services, { Post } from "./Services";
 
 export const userState = ref(services.getCurrentUser())
 
@@ -9,4 +9,4 @@ services.onAuthStateChange(() => {
 })
 
 export const isLoginPopup = ref(false)
-export const homePagePosts = ref({} as {posts: {}})
+export const homePagePosts = ref({} as {posts: Array<Post>})

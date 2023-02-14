@@ -13,7 +13,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div class="fixed w-full h-full">
+  <div class="fixed w-full h-full md:max-w-lg md:resize-x">
     <LoginPopup/>
     <div class="h-full w-full flex flex-col items-center">
       <Header/>

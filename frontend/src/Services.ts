@@ -13,6 +13,13 @@ export class UserData {
     }
 }
 
+export interface Post {
+    owner_name: string,
+    owner_username: string,
+    content: string,
+    created_at: string,
+}
+
 class Services {
     app: FirebaseApp
     auth: Auth
@@ -39,9 +46,11 @@ class Services {
             method: 'POST',
             body: JSON.stringify(body),
             headers: {
-                'Content-type': 'application/json; charset=UTF-8'
+                'Content-type': 'application/json; charset=UTF-8',
+                'Authorization': idToken,
             },
         })
+        return res.json()
     }
     
     async getFromAPI(path: string, idToken='') {
@@ -82,6 +91,12 @@ class Services {
     async getPosts() {
         const data = await this.getFromAPI('/get-posts')
         return await data.json()
+    }
+
+    async newPost(data: {content: string}) {
+        const id_token = await this.getIdToken()
+        const post = await this.postToAPI('/new-post', data, id_token)
+        return post.post as Post
     }
 }
 

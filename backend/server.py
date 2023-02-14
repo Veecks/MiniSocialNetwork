@@ -57,10 +57,12 @@ def new_post():
     if request.method == 'POST':
         data = request.get_json()
         try:
-            uid = fire.validate_user_token(data['id_token'])
-            res.set_data(fire.new_post(uid, data[id, 'content']))
+            uid = fire.validate_user_token(request.headers.get('Authorization'))
+            post = json.dumps({'post': fire.new_post(uid, data.get('content'))}, default=str)
+            res.set_data(post)
         except Exception as e:
-            res.set_data({'error': e.message})
+            # raise e
+            res.set_data({'error': str(e)})
     return res
 
 
@@ -69,7 +71,6 @@ def new_post():
 def get_posts():
     res = Response()
     if request.method == 'GET':
-        print('Requisição get')
         try:
             posts = json.dumps({'posts': fire.get_posts()}, default=str)
             res.set_data(posts)
