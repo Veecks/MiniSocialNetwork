@@ -1,6 +1,6 @@
 import firebase_admin as admin
 from firebase_admin import firestore, auth
-import os
+import os, json
 
 
 firebase_credentials = {
@@ -21,19 +21,69 @@ cred = admin.credentials.Certificate(firebase_credentials)
 app = admin.initialize_app(cred)
 db = firestore.client()
 
-def validate_user_token(id_token):
+
+def validate_user_token(id_token) -> str:
   try:
     usr = auth.verify_id_token(id_token)
   except Exception as e:
     raise e
-  return auth.get_user(usr['uid'])
+  return usr['uid']
 
-def new_user(email, password, username, name, ):
+
+def new_user(email, password, username, name):
   try:
-    usr = auth.create_user(email=email, password=password)
+    usr: auth.UserRecord = auth.create_user(email=email, password=password)
   except Exception as e:
     raise e
-  return usr
+  db.collection('users').document(usr.uid).set({
+    'email': email,
+    'username': username,
+    'name': name,
+  })
+  try:
+    return my_profile(usr.uid)
+  except Exception as e:
+    auth.delete_user(usr.uid)
+
+
+def my_profile(uid):
+  usr = db.collection('users').document(uid)
+  if usr.exists:
+    return usr.to_dict() 
+  else:
+    raise Exception('user not found')
+
+
+def new_post(uid, content):
+  owner_ref = db.collection('users').document(uid)
+  owner_data = owner_ref.get().to_dict()
+  post = {
+    'content': content,
+    'owner_name': owner_data['name'],
+    'owner_username': owner_data['username'],
+    'created_at': firestore.SERVER_TIMESTAMP,
+  }
+  try:
+    post_ref = db.collection('posts').document()
+    post_ref.set(post)
+    owner_ref.update({'posts': firestore.ArrayUnion([post_ref])})
+  except Exception as e:
+    raise e
+  return post
+
+
+def get_posts():
+  try:
+    query_ref = db.collection('posts').order_by('created_at').stream()
+    posts = [post.to_dict() for post in query_ref]
+      
+    return posts
+  except Exception as e:
+    raise e
+  
 
 if __name__ == '__main__':
-    pass
+    # testing uid: akNja7HOFKWrpIFANoufPoQsffo2
+    tuid = 'akNja7HOFKWrpIFANoufPoQsffo2'
+    # new_post(tuid, 'Esse é meu terceiro post!')
+    print()

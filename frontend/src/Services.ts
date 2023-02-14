@@ -45,12 +45,13 @@ class Services {
     }
 
     async loginWithEmailAndPassword(email: string, password: string) {
-        // this.postToAPI('new-user', userData)
+        signInWithEmailAndPassword(this.auth, email, password)
         return this.getCurrentUser()
     }
 
-    async createAccount(userData: UserData, password: string) {
-        await createUserWithEmailAndPassword(this.auth, userData.email, password || '')
+    async createAccount(userData: UserData) {
+        const user = {}
+        this.postToAPI('/new-user', user)
         .catch(error => console.log('Falha ao criar usuário: ' + error.message))
     }
 

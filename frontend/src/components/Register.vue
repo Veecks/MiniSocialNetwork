@@ -3,15 +3,20 @@ import { reactive } from 'vue';
 import services, { UserData } from '../Services';
 import Input from './Input.vue';
 
-const userData = reactive(new UserData('', '', ''))
-const pass = reactive({password: '', confirm: ''})
+const userData = reactive({
+    name: '',
+    username: '',
+    password: '',
+    confirmpass: '',
+    email: '',
+})
 
 async function submit() {
-    if(pass.password != pass.confirm) {
+    if(userData.password != userData.confirmpass) {
         alert('As senhas devem ser idênticas!')
         return
     }
-    await services.createAccount(userData, pass.password)
+    await services.createAccount(userData)
 }
 
 </script>
@@ -19,9 +24,11 @@ async function submit() {
 <template>
     <div>
         <div class="w-full h-full">
+            <Input class="mb-4" type="text" v-model="userData.email" placeholder="nome"/>
+            <Input class="mb-4" type="text" v-model="userData.email" placeholder="nome de usuário (não pode ser trocado)"/>
             <Input class="mb-4" type="email" v-model="userData.email" placeholder="email"/>
-            <Input class="mb-4" type="password" v-model="pass.password" placeholder="senha"/>
-            <Input class="mb-4" type="password" v-model="pass.confirm" placeholder="confirme sua senha"/>
+            <Input class="mb-4" type="password" v-model="userData.password" placeholder="senha"/>
+            <Input class="mb-4" type="password" v-model="userData.confirmpass" placeholder="confirme sua senha"/>
             <button class="block m-auto text text-pri-100 bg-pri-400 py-3 px-6 rounded-full font-bold" @click="submit">
                 Criar conta
             </button>
