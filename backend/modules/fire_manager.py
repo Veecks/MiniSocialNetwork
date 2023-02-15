@@ -35,15 +35,16 @@ def new_user(email, password, username, name):
     usr: auth.UserRecord = auth.create_user(email=email, password=password)
   except Exception as e:
     raise e
-  db.collection('users').document(usr.uid).set({
-    'email': email,
-    'username': username,
-    'name': name,
-  })
+    
   try:
-    return my_profile(usr.uid)
+    db.collection('users').document(usr.uid).set({
+      'email': email,
+      'username': username,
+      'name': name,
+    })
   except Exception as e:
     auth.delete_user(usr.uid)
+    raise e
 
 
 def my_profile(uid):
@@ -57,7 +58,7 @@ def my_profile(uid):
 def new_post(uid, content):
   owner_ref = db.collection('users').document(uid)
   owner_data = owner_ref.get().to_dict()
-  if(type(content) is not str and content != ''):
+  if(type(content) is not str or content == ''):
     raise ValueError('A publicação não pode ser vazia!')
   post = {
     'content': content,

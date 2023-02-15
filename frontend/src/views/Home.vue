@@ -2,7 +2,6 @@
 import Post from '../components/Post.vue'
 import NewPost from '../components/NewPost.vue'
 import { homePagePosts, userState } from '../Store';
-
 </script>
 
 <template>

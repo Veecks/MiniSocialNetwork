@@ -9,7 +9,7 @@ const hasAccount = ref(true)
 
 <template>
     <div>
-        <div class="absolute w-full h-full bg-black bg-opacity-40 flex flex-col justify-center items-center z-50" v-if="isLoginPopup">
+        <div class="absolute w-full h-full bg-black bg-opacity-40 flex flex-col justify-center items-center z-40" v-if="isLoginPopup">
             <div class="bg-pri-50 w-11/12 rounded-2xl mb-32">
                 <div class="flex justify-end p-0">
                     <button class="w-10 h-10 text-xl font-extrabold text-pri-200"

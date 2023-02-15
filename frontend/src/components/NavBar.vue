@@ -10,7 +10,7 @@ keys.forEach(key => {
 </script>
 
 <template>
-    <div class="bottom-0 w-full bg-pri-50 h-16 flex justify-around items-center z-50 shadow-2xl shadow-black">
+    <div class="bottom-0 w-full bg-pri-50 h-16 flex justify-around items-center shadow-2xl shadow-black">
         <div class="bg-transparent" v-for="route in $router.getRoutes()">
             <RouterLink :to="route.path">
                 <img class="block w-10 p-1 hover:bg-pri-200 rounded-xl hover:scale-110 transition-all" :src="(svgs[route.name as string])" alt="route.name">

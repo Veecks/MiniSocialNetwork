@@ -1,4 +1,4 @@
-from flask import Flask, request, Response, jsonify
+from flask import Flask, request
 import os
 from modules.fire_manager import db, auth
 import modules.fire_manager as fire
@@ -11,72 +11,50 @@ app = Flask(__name__)
 def home():
     return 'Essa é uma API desenvolvida para fins de estudo!'
 
-@app.route('/isauth', methods=['POST', 'OPTIONS'])
-@allow_cors
-def is_auth():
-    if request.method == 'POST':
-        data = request.get_json()
-        id_token = data['id_token']
-        try:
-            decoded_token = auth.verify_id_token(id_token)
-        except Exception as e:
-            decoded_token = {'email': e}
-        res = Response(f'Você se conectou com sucesso com o email: {decoded_token["email"]}')
-        return res
-    return Response()
-
 @app.route('/new-user', methods=['POST', 'OPTIONS'])
 @allow_cors
 def new_user():
-    res = Response()
     if request.method == 'POST':
         data = request.get_json()
         try:
             fire.new_user(data['email'], data['password'], data['username'], data['name'])
+            return {}, 200
         except Exception as e:
-            return res.set_data({'error': e.message})
-        res.set_data()
-    return res
+            return {'error': str(e)}, 400
 
 @app.route('/my-profile', methods=['POST', 'OPTIONS'])
 @allow_cors
 def my_profile():
-    res = Response()
     if request.method == 'POST':
         try:
             uid = fire.validate_user_token()
             fire.my_profile(uid)
+            return {}, 200
         except Exception as e:
-            res.set_data({'error': e.message})
-    return res
+            return {'error': e.message}, 400
 
 @app.route('/new-post', methods=['POST', 'OPTIONS'])
 @allow_cors
 def new_post():
-    res = Response()
     if request.method == 'POST':
         data = request.get_json()
         try:
             uid = fire.validate_user_token(request.headers.get('Authorization'))
             post = json.dumps({'post': fire.new_post(uid, data.get('content'))}, default=str)
-            res.set_data(post)
+            return post, 200
         except Exception as e:
-            # raise e
-            res.set_data({'error': str(e)})
-    return res
+            return {'error': str(e)}, 400
 
 
 @app.route('/get-posts', methods=['GET', 'OPTIONS'])
 @allow_cors
 def get_posts():
-    res = Response()
     if request.method == 'GET':
         try:
             posts = json.dumps({'posts': fire.get_posts()}, default=str)
-            res.set_data(posts)
+            return posts, 200
         except Exception as e:
-            raise e
-    return res
+            return str(e), 400
     
 
 if __name__ == '__main__':

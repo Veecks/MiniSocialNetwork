@@ -15,11 +15,18 @@ watch(post, () => {
     }
 })
 
+let nowPosting = false
 async function newPost() {
-    const postRes = await services.newPost({ content: post.value })
-    console.log(postRes)
-    console.log(homePagePosts.value.posts)
-    homePagePosts.value.posts.unshift(postRes)
+    if(nowPosting) return;
+    nowPosting = true
+    try {
+        const postRes = await services.newPost({ content: post.value })
+        homePagePosts.value.posts.unshift(postRes)
+    } catch(e) {
+        console.log(e)
+    } finally {
+        nowPosting = false
+    }
 }
 </script>
 

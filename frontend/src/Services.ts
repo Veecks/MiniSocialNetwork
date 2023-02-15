@@ -1,16 +1,12 @@
 import { FirebaseApp, initializeApp } from "firebase/app";
 import { Auth, getAuth, NextOrObserver, signInWithEmailAndPassword, User } from "firebase/auth";
+import eventBus from "./EventBus";
 
-export class UserData {
-    name: string
-    username: string
-    email: string
-
-    constructor(name: string, username: string, email: string) {
-        this.name = name
-        this.username = name
-        this.email = email
-    }
+export interface UserData {
+    name: string,
+    username: string,
+    email: string,
+    [keys: string]: any
 }
 
 export interface Post {
@@ -38,26 +34,32 @@ class Services {
         this.auth = getAuth()
         this.apiURL = import.meta.env.VITE_API_URL
         console.log('Instância de Services criada.')
-        console.log('Usuário logado: ' + this.auth.currentUser)
     }
-
-    async postToAPI(path: string, body: object, idToken='') {
-        const res = await fetch(this.apiURL + path, {
+    
+    private async postToAPI(path: string, body: object, idToken='') {
+        const req = {
             method: 'POST',
             body: JSON.stringify(body),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
                 'Authorization': idToken,
             },
-        })
-        return res.json()
+        }
+        const res = await fetch(this.apiURL + path, req)
+        if(res.ok)
+            return await res.json() as {[key: string]: any}
+        eventBus.emit('warn', (await res.json()).error)
+        return Promise.reject()
     }
     
-    async getFromAPI(path: string, idToken='') {
+    private async getFromAPI(path: string, idToken='') {
         const res = await fetch(this.apiURL + path, {
             method: 'GET',
         })
-        return res
+        if(res.ok)
+            return res
+        eventBus.emit('warn', (await res.json()).error)
+        return Promise.reject()
     }
 
     async loginWithEmailAndPassword(email: string, password: string) {
@@ -66,14 +68,13 @@ class Services {
     }
 
     async createAccount(userData: UserData) {
-        const user = {}
-        this.postToAPI('/new-user', user)
+        this.postToAPI('/new-user', userData)
         .catch(error => console.log('Falha ao criar usuário: ' + error.message))
     }
 
-    getCurrentUser() : UserData | null {
+    getCurrentUser() : User | null {
         const user = this.auth.currentUser
-        return user ? new UserData('', '', user.email!) : null
+        return user ? user : null
     }
 
     onAuthStateChange(func: NextOrObserver<User | null>) {
@@ -93,10 +94,10 @@ class Services {
         return await data.json()
     }
 
-    async newPost(data: {content: string}) {
+    async newPost(postData: {content: string}) {
         const id_token = await this.getIdToken()
-        const post = await this.postToAPI('/new-post', data, id_token)
-        return post.post as Post
+        const data = await this.postToAPI('/new-post', postData, id_token)
+        return data.post as Post
     }
 }
 

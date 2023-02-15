@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 import services, { UserData } from '../Services';
+import { isLoginPopup } from '../Store';
 import Input from './Input.vue';
 
-const userData = reactive({
+const userData: UserData = reactive({
     name: '',
     username: '',
     password: '',
@@ -16,7 +17,7 @@ async function submit() {
         alert('As senhas devem ser idênticas!')
         return
     }
-    await services.createAccount(userData)
+    await services.createAccount(userData).then()
 }
 
 </script>
@@ -24,8 +25,8 @@ async function submit() {
 <template>
     <div>
         <div class="w-full h-full">
-            <Input class="mb-4" type="text" v-model="userData.email" placeholder="nome"/>
-            <Input class="mb-4" type="text" v-model="userData.email" placeholder="nome de usuário (não pode ser trocado)"/>
+            <Input class="mb-4" type="text" v-model="userData.name" placeholder="nome"/>
+            <Input class="mb-4" type="text" v-model="userData.username" placeholder="nome de usuário (não pode ser trocado)"/>
             <Input class="mb-4" type="email" v-model="userData.email" placeholder="email"/>
             <Input class="mb-4" type="password" v-model="userData.password" placeholder="senha"/>
             <Input class="mb-4" type="password" v-model="userData.confirmpass" placeholder="confirme sua senha"/>
