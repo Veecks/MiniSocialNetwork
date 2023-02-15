@@ -17,7 +17,11 @@ async function submit() {
         alert('As senhas devem ser idênticas!')
         return
     }
-    await services.createAccount(userData).then()
+
+    await services.createAccount(userData).then( async () => {
+        isLoginPopup.value = false
+        await services.loginWithEmailAndPassword(userData.email, userData.password)
+    })
 }
 
 </script>

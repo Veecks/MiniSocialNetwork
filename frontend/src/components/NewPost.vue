@@ -21,6 +21,7 @@ async function newPost() {
     nowPosting = true
     try {
         const postRes = await services.newPost({ content: post.value })
+        post.value = ''
         homePagePosts.value.posts.unshift(postRes)
     } catch(e) {
         console.log(e)

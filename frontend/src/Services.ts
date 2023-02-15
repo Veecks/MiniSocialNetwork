@@ -49,7 +49,7 @@ class Services {
         if(res.ok)
             return await res.json() as {[key: string]: any}
         eventBus.emit('warn', (await res.json()).error)
-        return Promise.reject()
+        return Promise.reject('Não foi possível completar a requisição.')
     }
     
     private async getFromAPI(path: string, idToken='') {
@@ -63,13 +63,12 @@ class Services {
     }
 
     async loginWithEmailAndPassword(email: string, password: string) {
-        signInWithEmailAndPassword(this.auth, email, password)
+        await signInWithEmailAndPassword(this.auth, email, password)
         return this.getCurrentUser()
     }
 
     async createAccount(userData: UserData) {
-        this.postToAPI('/new-user', userData)
-        .catch(error => console.log('Falha ao criar usuário: ' + error.message))
+        const data = await this.postToAPI('/new-user', userData)
     }
 
     getCurrentUser() : User | null {
